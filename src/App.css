@@ -1,0 +1,516 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.85) 60%, rgba(135,206,235,0.18) 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.invitation-container {
+  position: relative;
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none; /* Quita el fondo aquí */
+  padding: 0;
+  z-index: 2;
+}
+
+.invitation-bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  background: url('https://mx.web.img3.acsta.net/pictures/24/05/07/21/07/5876678.jpg') center center/cover no-repeat;
+  opacity: 0.18;
+  filter: blur(3px) grayscale(10%);
+  pointer-events: none;
+}
+
+.invitation-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(240, 248, 255, 0.8) 0%, 
+    rgba(255, 255, 255, 0.9) 50%, 
+    rgba(245, 245, 245, 0.8) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.invitation-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  padding: 40px 35px;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  border: 1px solid rgba(230, 230, 230, 0.5);
+
+  /* Fondo de la película */
+  background-image: 
+    linear-gradient(135deg, rgba(255,255,255,0.5) 60%, rgba(135,206,235,0.05) 100%),
+    url('assets/materialistas.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Animación de entrada */
+  animation: cardPopIn 1s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+@keyframes cardPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.movie-poster {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.animated-title {
+  font-size: 2.2rem;
+  color: #1a1a1a; /* antes #2c3e50 */
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.movie-info {
+  background: rgba(100, 149, 237, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 25px 0;
+  border: 1px solid rgba(100, 149, 237, 0.2);
+}
+
+.movie-title {
+  font-size: 1.6rem;
+  color: #1a1a1a; /* antes #2c3e50 */
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.movie-details {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.movie-details span {
+  background: rgba(100, 149, 237, 0.15);
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: #222; /* antes #2c3e50 */
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.invitation-text {
+  font-size: 1.1rem;
+  color: #222; /* antes #34495e */
+  margin-bottom: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.invitation-subtitle {
+  font-size: 0.95rem;
+  color: #444; /* antes #7f8c8d */
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.animated-heart {
+  font-size: 2.5rem;
+  margin-top: 18px;
+  animation: heartbeat 1.2s infinite;
+  display: inline-block;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  20% { transform: scale(1.25); }
+  40% { transform: scale(0.95); }
+  60% { transform: scale(1.15); }
+  80% { transform: scale(1); }
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.accept-button {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background: linear-gradient(45deg, #6495ED, #87CEEB);
+  color: white;
+  box-shadow: 0 4px 12px rgba(100, 149, 237, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.accept-button::after {
+  content: '';
+  position: absolute;
+  left: -75%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.7) 100%);
+  transform: skewX(-25deg);
+  animation: shine 2.5s infinite;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  60% { left: 120%; }
+  100% { left: 120%; }
+}
+
+.accept-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(100, 149, 237, 0.4);
+}
+
+.reject-button {
+  padding: 12px 25px;
+  border: 2px solid #bdc3c7;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  color: #7f8c8d;
+  transition: all 0.3s ease;
+}
+
+.reject-button:hover {
+  background: rgba(231, 76, 60, 0.1);
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.reject-button-floating {
+  padding: 12px 25px;
+  border: 2px solid #e74c3c;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.95);
+  color: #e74c3c;
+  transition: all 0.3s ease;
+  position: fixed;
+  z-index: 1000;
+  white-space: nowrap;
+  transition: left 0.3s cubic-bezier(.68,-0.55,.27,1.55), top 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+  animation: bounceReject 0.4s;
+}
+
+@keyframes bounceReject {
+  0% { transform: scale(1) rotate(-5deg);}
+  40% { transform: scale(1.15) rotate(5deg);}
+  60% { transform: scale(0.95) rotate(-3deg);}
+  100% { transform: scale(1) rotate(0);}
+}
+
+.reject-button-floating:hover {
+  background: rgba(231, 76, 60, 0.1);
+  transform: scale(1.05);
+}
+
+.reject-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(100, 149, 237, 0.95);
+  color: white;
+  padding: 18px 25px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+  z-index: 2000;
+  box-shadow: 0 8px 24px rgba(100, 149, 237, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.hint {
+  margin-top: 25px;
+  color: #7f8c8d;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+/* Mensaje de éxito */
+.success-message {
+  text-align: center;
+}
+
+.celebration-big {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.success-title {
+  font-size: 2.2rem;
+  color: #1a1a1a; /* antes #2c3e50 */
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.success-content {
+  margin: 25px 0;
+}
+
+.success-text {
+  font-size: 1.2rem;
+  color: #222; /* antes #34495e */
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+
+.success-details {
+  display: flex;
+  justify-content: space-around;
+  margin: 25px 0;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.detail-item {
+  background: rgba(100, 149, 237, 0.15);
+  backdrop-filter: blur(5px);
+  padding: 15px 20px;
+  border-radius: 12px;
+  color: #222; /* antes #2c3e50 */
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(100, 149, 237, 0.2);
+}
+
+.detail-item .icon {
+  font-size: 1.2rem;
+}
+
+.floating-hearts {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  height: 50px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.floating-hearts span {
+  display: inline-block;
+  animation: floatHeart 2.5s ease-in-out infinite alternate;
+}
+
+.floating-hearts span:nth-child(2) { animation-delay: 0.5s; }
+.floating-hearts span:nth-child(3) { animation-delay: 1s; }
+.floating-hearts span:nth-child(4) { animation-delay: 1.5s; }
+.floating-hearts span:nth-child(5) { animation-delay: 2s; }
+
+@keyframes floatHeart {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-18px) scale(1.15); }
+}
+
+.final-message {
+  background: rgba(100, 149, 237, 0.12);
+  backdrop-filter: blur(5px);
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(100, 149, 237, 0.2);
+  margin-top: 25px;
+}
+
+.final-message p {
+  font-size: 1.1rem;
+  color: #222; /* antes #2c3e50 */
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Animación de blobs de fondo */
+.background-blobs {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: moveBlob 16s ease-in-out infinite alternate, blurPulse 7s ease-in-out infinite alternate;
+}
+
+@keyframes moveBlob {
+  0% { transform: scale(1) translateY(0) translateX(0);}
+  50% { transform: scale(1.15) translateY(-30px) translateX(40px);}
+  100% { transform: scale(1) translateY(0) translateX(0);}
+}
+
+@keyframes blurPulse {
+  0% { filter: blur(40px);}
+  50% { filter: blur(80px);}
+  100% { filter: blur(40px);}
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .invitation-card {
+    padding: 35px 25px;
+    max-width: 95vw;
+    margin: 10px;
+  }
+  
+  .animated-title {
+    font-size: 1.9rem;
+  }
+  
+  .movie-title {
+    font-size: 1.4rem;
+  }
+  
+  .invitation-text {
+    font-size: 1rem;
+  }
+  
+  .movie-details {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .accept-button {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
+  
+  .success-title {
+    font-size: 1.9rem;
+  }
+  
+  .success-text {
+    font-size: 1.1rem;
+  }
+  
+  .success-details {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .floating-hearts {
+    gap: 15px;
+  }
+  
+  .floating-hearts span {
+    font-size: 1.3rem;
+  }
+  
+  .reject-button-floating {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .reject-message {
+    padding: 15px 20px;
+    font-size: 0.95rem;
+    max-width: 80vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .invitation-card {
+    background-size: contain;
+  }
+}
+
+@media (max-width: 480px) {
+  .invitation-card {
+    padding: 30px 20px;
+  }
+  
+  .animated-title {
+    font-size: 1.7rem;
+  }
+  
+  .movie-poster {
+    font-size: 2.2rem;
+  }
+  
+  .movie-title {
+    font-size: 1.3rem;
+  }
+  
+  .invitation-text {
+    font-size: 0.95rem;
+  }
+  
+  .accept-button {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+  
+  .success-title {
+    font-size: 1.7rem;
+  }
+  
+  .celebration-big {
+    font-size: 2.5rem;
+  }
+}
