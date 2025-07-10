@@ -89,7 +89,7 @@ const handleRejectClick = (e: React.MouseEvent | React.TouchEvent) => {
       {showRejectMessage && (
         <div className="reject-message">
           <p>¡Vamos, Mari! 😅</p>
-          <p>Sabes que va a estar divertido... 🙈</p>
+          <p>Sabes que quieres verla... 🙈</p>
         </div>
       )}
 
