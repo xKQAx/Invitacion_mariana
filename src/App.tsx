@@ -9,6 +9,7 @@ function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [showRejectButton, setShowRejectButton] = useState(true);
   const rejectButtonRef = useRef<HTMLButtonElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -24,6 +25,44 @@ function App() {
     setShowRejectButton(false);
   };
 
+  const getRandomPosition = () => {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile && cardRef.current) {
+      // En móvil, mantener el botón dentro de la tarjeta
+      const cardRect = cardRef.current.getBoundingClientRect();
+      const buttonWidth = 120;
+      const buttonHeight = 45;
+      const padding = 20;
+      
+      const minX = cardRect.left + padding;
+      const maxX = cardRect.right - buttonWidth - padding;
+      const minY = cardRect.top + padding;
+      const maxY = cardRect.bottom - buttonHeight - padding;
+      
+      return {
+        x: Math.random() * (maxX - minX) + minX,
+        y: Math.random() * (maxY - minY) + minY
+      };
+    } else {
+      // En desktop, usar toda la pantalla
+      const padding = 150;
+      const maxX = window.innerWidth - padding;
+      const maxY = window.innerHeight - padding;
+      
+      let newX, newY;
+      do {
+        newX = Math.random() * maxX;
+        newY = Math.random() * maxY;
+      } while (
+        Math.abs(newX - mousePosition.x) < 200 || 
+        Math.abs(newY - mousePosition.y) < 200
+      );
+      
+      return { x: newX, y: newY };
+    }
+  };
+
   const handleRejectHover = () => {
     setRejectAttempts(prev => prev + 1);
     
@@ -32,31 +71,25 @@ function App() {
       setTimeout(() => setShowRejectMessage(false), 2000);
     }
     
-    const padding = 150;
-    const maxX = window.innerWidth - padding;
-    const maxY = window.innerHeight - padding;
-    
-    let newX, newY;
-    do {
-      newX = Math.random() * maxX;
-      newY = Math.random() * maxY;
-    } while (
-      Math.abs(newX - mousePosition.x) < 200 || 
-      Math.abs(newY - mousePosition.y) < 200
-    );
-    
-    setRejectButtonPosition({ x: newX, y: newY });
+    const newPosition = getRandomPosition();
+    setRejectButtonPosition(newPosition);
   };
+
+const handleRejectClick = (e: React.MouseEvent | React.TouchEvent) => {
+  e.preventDefault();
+  handleRejectHover();
+};
 
   return (
     <div className="invitation-container">
       <div className="invitation-bg-image"></div>
+      <div className="wave-background"></div>
 
       {/* Mensaje de rechazo flotante */}
       {showRejectMessage && (
         <div className="reject-message">
           <p>¡Vamos, Mari! 😅</p>
-            <p>Sabes que va a estar divertido... 🙈</p>
+          <p>Sabes que va a estar divertido... 🙈</p>
         </div>
       )}
 
@@ -71,6 +104,8 @@ function App() {
           }}
           onMouseEnter={handleRejectHover}
           onTouchStart={handleRejectHover}
+          onClick={handleRejectClick}
+          onTouchEnd={handleRejectClick}
         >
           {rejectAttempts === 1 && "¡Espera! 😰"}
           {rejectAttempts === 2 && "¡No puedes! 🏃‍♂️"}
@@ -79,7 +114,7 @@ function App() {
         </button>
       )}
 
-      <div className="invitation-card">
+      <div className="invitation-card" ref={cardRef}>
         {!accepted ? (
           <>
             <div className="movie-poster">🎬</div>
@@ -94,10 +129,10 @@ function App() {
             </div>
             
             <p className="invitation-text">
-              ¿Te animas a ir al cine conmigo?
+              ¿Suficiente sorpresa, jakjajak?
             </p>
             <p className="invitation-subtitle">
-              Palomitas, risas y buena compañía 🍿
+              Crispetas, risas y buen parche 🍿
             </p>
             
             <div className="animated-heart">🎭</div>
@@ -115,6 +150,7 @@ function App() {
                   className="reject-button"
                   onMouseEnter={handleRejectHover}
                   onTouchStart={handleRejectHover}
+                  onClick={handleRejectClick}
                 >
                   No, paso 😅
                 </button>
@@ -134,7 +170,7 @@ function App() {
                 ¡Sabía que dirías que sí! 😄
               </p>
               <p className="success-text">
-                Va a ser una tarde súper divertida 🎬✨
+                Jum, no recuerdo haber visto romcoms... 🎬✨
               </p>
               <div className="success-details">
                 <div className="detail-item">
@@ -157,7 +193,7 @@ function App() {
                 <span>😊</span>
             </div>
             <div className="final-message">
-              <p>¡Prepárate para una tarde genial! 😊</p>
+              <p>¡Va a ser un buen día! 😊</p>
             </div>
           </div>
         )}

@@ -21,7 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none; /* Quita el fondo aquí */
+  background: none;
   padding: 0;
   z-index: 2;
 }
@@ -37,6 +37,77 @@ body {
   opacity: 0.18;
   filter: blur(3px) grayscale(10%);
   pointer-events: none;
+}
+
+/* Animación de olas de fondo - CORREGIDA */
+.wave-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.wave-background::before,
+.wave-background::after {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(135,206,235,0.75) 0%,
+    rgba(100,149,237,0.65) 30%,
+    rgba(135,206,235,0.45) 60%,
+    transparent 80%
+  );
+  animation: wave-movement 15s ease-in-out infinite;
+}
+
+.wave-background::before {
+  top: -25%;
+  left: -25%;
+  animation-delay: 0s;
+}
+
+.wave-background::after {
+  bottom: -25%;
+  right: -25%;
+  animation-delay: -7.5s;
+  background: radial-gradient(
+    circle at center,
+    rgba(100,149,237,0.12) 0%,
+    rgba(135,206,235,0.10) 30%,
+    rgba(173,216,230,0.06) 60%,
+    transparent 80%
+  );
+}
+
+@keyframes wave-movement {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.4;
+  }
+  25% {
+    transform: rotate(90deg) scale(1.2);
+    opacity: 0.6;
+  }
+  50% {
+    transform: rotate(180deg) scale(0.8);
+    opacity: 0.5;
+  }
+  75% {
+    transform: rotate(270deg) scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 0.4;
+  }
 }
 
 .invitation-container::before {
@@ -78,8 +149,16 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 
-  /* Animación de entrada */
+  /* Animación de entrada mejorada */
   animation: cardPopIn 1s cubic-bezier(.68,-0.55,.27,1.55);
+  transition: all 0.3s ease;
+}
+
+.invitation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
 @keyframes cardPopIn {
@@ -97,13 +176,19 @@ body {
   font-size: 2.5rem;
   margin-bottom: 20px;
   opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.movie-poster:hover {
+  transform: scale(1.1);
 }
 
 .animated-title {
   font-size: 2.2rem;
-  color: #1a1a1a; /* antes #2c3e50 */
+  color: #1a1a1a;
   margin-bottom: 25px;
   font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 .movie-info {
@@ -113,11 +198,17 @@ body {
   padding: 20px;
   margin: 25px 0;
   border: 1px solid rgba(100, 149, 237, 0.2);
+  transition: all 0.3s ease;
+}
+
+.movie-info:hover {
+  background: rgba(100, 149, 237, 0.15);
+  transform: translateY(-1px);
 }
 
 .movie-title {
   font-size: 1.6rem;
-  color: #1a1a1a; /* antes #2c3e50 */
+  color: #1a1a1a;
   margin-bottom: 15px;
   font-weight: 600;
 }
@@ -133,14 +224,20 @@ body {
   background: rgba(100, 149, 237, 0.15);
   padding: 8px 12px;
   border-radius: 12px;
-  color: #222; /* antes #2c3e50 */
+  color: #222;
   font-weight: 500;
   font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.movie-details span:hover {
+  background: rgba(100, 149, 237, 0.25);
+  transform: translateY(-2px);
 }
 
 .invitation-text {
   font-size: 1.1rem;
-  color: #222; /* antes #34495e */
+  color: #222;
   margin-bottom: 15px;
   line-height: 1.6;
   font-weight: 400;
@@ -148,7 +245,7 @@ body {
 
 .invitation-subtitle {
   font-size: 0.95rem;
-  color: #444; /* antes #7f8c8d */
+  color: #444;
   margin-bottom: 20px;
   font-style: italic;
 }
@@ -249,6 +346,8 @@ body {
   white-space: nowrap;
   transition: left 0.3s cubic-bezier(.68,-0.55,.27,1.55), top 0.3s cubic-bezier(.68,-0.55,.27,1.55);
   animation: bounceReject 0.4s;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 @keyframes bounceReject {
@@ -261,6 +360,10 @@ body {
 .reject-button-floating:hover {
   background: rgba(231, 76, 60, 0.1);
   transform: scale(1.05);
+}
+
+.reject-button-floating:active {
+  transform: scale(0.95);
 }
 
 .reject-message {
@@ -278,6 +381,18 @@ body {
   z-index: 2000;
   box-shadow: 0 8px 24px rgba(100, 149, 237, 0.3);
   backdrop-filter: blur(10px);
+  animation: popInMessage 0.3s ease;
+}
+
+@keyframes popInMessage {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .hint {
@@ -290,17 +405,35 @@ body {
 /* Mensaje de éxito */
 .success-message {
   text-align: center;
+  animation: successFadeIn 0.8s ease;
+}
+
+@keyframes successFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .celebration-big {
   font-size: 3rem;
   margin-bottom: 20px;
   opacity: 0.8;
+  animation: celebrationPulse 2s infinite;
+}
+
+@keyframes celebrationPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .success-title {
   font-size: 2.2rem;
-  color: #1a1a1a; /* antes #2c3e50 */
+  color: #1a1a1a;
   margin-bottom: 25px;
   font-weight: 600;
 }
@@ -311,7 +444,7 @@ body {
 
 .success-text {
   font-size: 1.2rem;
-  color: #222; /* antes #34495e */
+  color: #222;
   margin-bottom: 15px;
   font-weight: 400;
 }
@@ -329,12 +462,18 @@ body {
   backdrop-filter: blur(5px);
   padding: 15px 20px;
   border-radius: 12px;
-  color: #222; /* antes #2c3e50 */
+  color: #222;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 10px;
   border: 1px solid rgba(100, 149, 237, 0.2);
+  transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+  background: rgba(100, 149, 237, 0.25);
+  transform: translateY(-2px);
 }
 
 .detail-item .icon {
@@ -373,11 +512,17 @@ body {
   border-radius: 12px;
   border: 1px solid rgba(100, 149, 237, 0.2);
   margin-top: 25px;
+  transition: all 0.3s ease;
+}
+
+.final-message:hover {
+  background: rgba(100, 149, 237, 0.18);
+  transform: translateY(-1px);
 }
 
 .final-message p {
   font-size: 1.1rem;
-  color: #222; /* antes #2c3e50 */
+  color: #222;
   margin: 0;
   font-weight: 500;
 }
@@ -397,6 +542,32 @@ body {
   filter: blur(60px);
   opacity: 0.35;
   animation: moveBlob 16s ease-in-out infinite alternate, blurPulse 7s ease-in-out infinite alternate;
+}
+
+.blob1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, rgba(135,206,235,0.3), rgba(100,149,237,0.2));
+  top: 10%;
+  left: 10%;
+}
+
+.blob2 {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(45deg, rgba(100,149,237,0.2), rgba(135,206,235,0.3));
+  bottom: 20%;
+  right: 15%;
+  animation-delay: -5s;
+}
+
+.blob3 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(45deg, rgba(135,206,235,0.25), rgba(100,149,237,0.15));
+  top: 60%;
+  left: 60%;
+  animation-delay: -10s;
 }
 
 @keyframes moveBlob {
@@ -472,6 +643,11 @@ body {
     font-size: 0.95rem;
     max-width: 80vw;
   }
+
+  /* Ocultar animación de olas en móvil para mejor rendimiento */
+  .wave-background {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
@@ -512,5 +688,17 @@ body {
   
   .celebration-big {
     font-size: 2.5rem;
+  }
+}
+
+/* Animación específica para desktop */
+@media (min-width: 769px) {
+  .wave-background {
+    display: block;
+  }
+  
+  .wave-background::before,
+  .wave-background::after {
+    animation-duration: 15s;
   }
 }
